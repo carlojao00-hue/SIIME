@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="PT-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR Emergência</title>
+    <link rel="stylesheet" href="../../css/qr-emergencia.css">
+</head>
+<body>
+    <header>
+    </header>
+
+    <main>
+        <aside class="sidebar">
+            <h1>SIIME</h1>
+            <nav>
+                <ul>
+                    <li><a href="dashboard.html">Inicio</a></li>
+                    <li><a href="exames-consul.html">Exames e Consultas</a></li>
+                    <li><a href="ficha-completa.html">Minha Ficha</a></li>
+                    <li><a href="qr-emergencia.html">QR Emergência</a></li>
+                    <li><a href="login.html">Sair</a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <section class="qr-container">
+            <div class="qr-wrapper">
+                <h2>Seu QR Code de Emergência</h2>
+                <h1 id="aviso" class="aviso" style="display:none;">Carregando...</h1>
+                <p class="info-text">Escaneie este código para acessar sua ficha médica completa em caso de emergência</p>
+                
+                <div id="qrcode" class="qr-display"></div>
+
+                <div class="actions">
+                    <button id="download-btn" class="btn btn-primary">Baixar QR Code</button>
+                    <button id="print-btn" class="btn btn-secondary">Imprimir</button>
+                </div>
+
+                <div class="ficha-resumida">
+                    <h3>Ficha Resumida</h3>
+                    <div class="info-grid">
+                        <div class="info-item">
+                            <strong>Nome:</strong>
+                            <span id="nome"></span>
+                        </div>
+                        <div class="info-item">
+                            <strong>Tipo Sanguíneo:</strong>
+                            <span id="tipo-sanguineo"></span>
+                        </div>
+                        <div class="info-item">
+                            <strong>Alergias:</strong>
+                            <span id="alergias"></span>
+                        </div>
+                        <div class="info-item">
+                            <strong>Contato Emergência:</strong>
+                            <span id="contato"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="../../js/qrcode.min.js"></script>
+    <script src="../../js/qr-emergencia.js"></script>
+</body>
+</html>

@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>SIIME — Ficha de Emergência</title>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg-dark:    #f5f5f5;
+      --bg-panel:   #ffffff;
+      --bg-card:    #fafafa;
+      --border:     #e1e4e8;
+      --accent:     #5b6efb;
+      --accent-dim: #5b6efb15;
+      --text-main:  #24292e;
+      --text-muted: #586069;
+      --text-hint:  #959da5;
+      --red:        #cb2431;
+      --amber:      #d89d20;
+      --blue:       #0366d6;
+    }
+
+    body {
+      font-family: 'Space Grotesk', sans-serif;
+      background: var(--bg-dark);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+    }
+
+    /* ---- SIDEBAR ---- */
+    .sidebar {
+      width: 240px;
+      min-height: 100vh;
+      background: var(--bg-panel);
+      border-right: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      padding: 1.5rem 1rem;
+      flex-shrink: 0;
+    }
+
+    .sidebar-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 0 0.5rem 1.5rem;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 1.5rem;
+    }
+
+    .sidebar-logo .icon {
+      width: 36px; height: 36px;
+      background: var(--accent-dim);
+      border: 1px solid var(--accent);
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 18px;
+    }
+
+    .sidebar-logo h1 { font-size: 1rem; font-weight: 600; letter-spacing: -0.02em; }
+    .sidebar-logo small {
+      display: block;
+      font-size: 0.65rem;
+      color: var(--accent);
+      font-family: 'JetBrains Mono', monospace;
+      letter-spacing: 0.06em;
+    }
+
+    .nav-section {
+      font-size: 0.65rem;
+      color: var(--text-hint);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      font-family: 'JetBrains Mono', monospace;
+      padding: 0 0.5rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 9px 12px;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      cursor: pointer;
+      margin-bottom: 2px;
+      transition: background 0.15s, color 0.15s;
+      text-decoration: none;
+    }
+
+    .nav-item:hover { background: var(--bg-card); color: var(--text-main); }
+    .nav-item .nav-icon { font-size: 16px; width: 20px; text-align: center; }
+
+    .sidebar-bottom {
+      margin-top: auto;
+      padding-top: 1rem;
+      border-top: 1px solid var(--border);
+    }
+
+    .profissional-badge {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 12px;
+      background: var(--bg-card);
+      border-radius: 8px;
+      font-size: 0.8rem;
+    }
+
+    .avatar {
+      width: 32px; height: 32px;
+      background: var(--accent-dim);
+      border: 1px solid var(--accent);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 14px;
+      flex-shrink: 0;
+    }
+
+    .profissional-info small {
+      display: block;
+      font-size: 0.65rem;
+      color: var(--text-hint);
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    /* ---- MAIN ---- */
+    .main { flex: 1; padding: 2rem; overflow-y: auto; }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1.5rem;
+    }
+
+    .topbar-left { display: flex; align-items: center; gap: 12px; }
+
+    .btn-voltar {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--bg-panel);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 8px 14px;
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: background 0.15s, color 0.15s;
+      text-decoration: none;
+      font-family: 'Space Grotesk', sans-serif;
+    }
+
+    .btn-voltar:hover { background: var(--bg-card); color: var(--text-main); }
+
+    .topbar h2 {
+      font-size: 1.3rem;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+    }
+
+    .topbar h2 span { color: var(--accent); }
+
+    /* ---- ALERTA EMERGÊNCIA ---- */
+    .alerta-emergencia {
+      background: #fee3e3;
+      border: 1px solid #fcc2d7;
+      border-left: 3px solid var(--red);
+      border-radius: 10px;
+      padding: 12px 16px;
+      font-size: 0.82rem;
+      color: #a61e4d;
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    /* ---- FICHA HEADER ---- */
+    .ficha-header {
+      background: var(--bg-panel);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    .paciente-info { display: flex; align-items: center; gap: 16px; }
+
+    .paciente-avatar-lg {
+      width: 64px; height: 64px;
+      background: var(--accent-dim);
+      border: 1px solid var(--accent);
+      border-radius: 14px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 30px;
+      flex-shrink: 0;
+    }
+
+    .paciente-dados h3 {
+      font-size: 1.3rem;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      margin-bottom: 4px;
+    }
+
+    .paciente-dados .meta {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      font-family: 'JetBrains Mono', monospace;
+      line-height: 1.7;
+    }
+
+    .tipo-sangue-box {
+      background: #fef0f0;
+      border: 1px solid #fcc2c2;
+      border-radius: 12px;
+      padding: 12px 20px;
+      text-align: center;
+      min-width: 90px;
+    }
+
+    .tipo-sangue-box .sangue-val {
+      font-size: 2rem;
+      font-weight: 600;
+      color: var(--red);
+      font-family: 'JetBrains Mono', monospace;
+      line-height: 1;
+    }
+
+    .tipo-sangue-box small {
+      display: block;
+      font-size: 0.6rem;
+      color: var(--text-hint);
+      margin-top: 4px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    /* ---- SECÇÕES ---- */
+    .secoes-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .secao {
+      background: var(--bg-panel);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.2rem 1.4rem;
+    }
+
+    .secao.largura-total {
+      grid-column: 1 / -1;
+    }
+
+    .secao-titulo {
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      font-family: 'JetBrains Mono', monospace;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .secao-titulo .dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .dot-red    { background: var(--red); }
+    .dot-blue   { background: var(--blue); }
+    .dot-amber  { background: var(--amber); }
+    .dot-green  { background: var(--accent); }
+
+    .tag-item {
+      display: inline-block;
+      border-radius: 6px;
+      padding: 5px 12px;
+      font-size: 0.8rem;
+      margin: 3px 4px 3px 0;
+      font-weight: 500;
+    }
+
+    .tag-alergia { background: #fee3e3; color: var(--red);   border: 1px solid #fcc2d7; }
+    .tag-med     { background: #ddf4ff; color: var(--blue);  border: 1px solid #b6e3ff; }
+    .tag-cond    { background: #fff8e1; color: var(--amber); border: 1px solid #fce090; }
+
+    .vazio { font-size: 0.82rem; color: var(--text-hint); font-style: italic; }
+
+    .contato-card {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .contato-avatar {
+      width: 42px; height: 42px;
+      background: var(--accent-dim);
+      border: 1px solid var(--accent);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 20px;
+      flex-shrink: 0;
+    }
+
+    .contato-info p {
+      font-size: 0.92rem;
+      font-weight: 500;
+      margin-bottom: 2px;
+    }
+
+    .contato-info small {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    /* ---- RODAPÉ ---- */
+    .ficha-rodape {
+      background: var(--bg-panel);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1rem 1.4rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.72rem;
+      color: var(--text-hint);
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .ficha-rodape span { color: var(--accent); }
+
+    /* ---- TELA DE ERRO ---- */
+    .erro-tela {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 1rem;
+      text-align: center;
+      color: var(--text-muted);
+    }
+
+    .erro-tela .ico { font-size: 3rem; }
+    .erro-tela h3   { font-size: 1.2rem; color: var(--text-main); }
+    .erro-tela p    { font-size: 0.85rem; }
+
+    .btn-voltar-grande {
+      background: var(--accent);
+      color: #0d1117;
+      border: none;
+      border-radius: 8px;
+      padding: 11px 24px;
+      font-size: 0.88rem;
+      font-weight: 600;
+      font-family: 'Space Grotesk', sans-serif;
+      cursor: pointer;
+      margin-top: 0.5rem;
+      transition: opacity 0.2s;
+    }
+
+    .btn-voltar-grande:hover { opacity: 0.85; }
+  </style>
+</head>
+<body>
+
+<!-- SIDEBAR -->
+<aside class="sidebar">
+  <div class="sidebar-logo">
+    <div class="icon">🏥</div>
+    <div>
+      <h1>SIIME</h1>
+      <small>PAINEL MÉDICO</small>
+    </div>
+  </div>
+
+  <p class="nav-section">NAVEGAÇÃO</p>
+
+  <a class="nav-item" href="painel-medico.html">
+    <span class="nav-icon">🔍</span> Buscar paciente
+  </a>
+  <a class="nav-item" href="login.html">
+    <span class="nav-icon">👤</span> Área do paciente
+  </a>
+  <a class="nav-item" href="sobre.html">
+    <span class="nav-icon">ℹ️</span> Sobre o SIIME
+  </a>
+  <a class="nav-item" href="suporte.html">
+    <span class="nav-icon">🆘</span> Suporte
+  </a>
+
+  <div class="sidebar-bottom">
+    <div class="profissional-badge">
+      <div class="avatar">👨‍⚕️</div>
+      <div class="profissional-info">
+        <span id="crmDisplay" style="font-size:0.8rem; font-weight:500;">Profissional</span>
+        <small>autenticado</small>
+      </div>
+    </div>
+    <a class="nav-item" href="login-medico.html" style="margin-top:6px; color: #cb2431cc;" onclick="sair()">
+      <span class="nav-icon">🚪</span> Sair
+    </a>
+  </div>
+</aside>
+
+<!-- CONTEÚDO PRINCIPAL -->
+<main class="main" id="mainContent">
+  <!-- Conteúdo renderizado via JS -->
+</main>
+
+<script>
+  // Verificar autenticação
+  if (sessionStorage.getItem('profissional_autenticado') !== 'true') {
+    window.location.href = 'login-medico.html';
+  }
+
+  const crm = sessionStorage.getItem('profissional_crm') || 'Profissional';
+  document.getElementById('crmDisplay').textContent = crm;
+
+  function sair() {
+    sessionStorage.removeItem('profissional_autenticado');
+    sessionStorage.removeItem('profissional_crm');
+  }
+
+  // Carregar paciente
+  const raw = sessionStorage.getItem('paciente_visualizado');
+  const main = document.getElementById('mainContent');
+
+  if (!raw) {
+    main.innerHTML = `
+      <div class="erro-tela">
+        <div class="ico">⚠️</div>
+        <h3>Nenhum paciente selecionado</h3>
+        <p>Volte ao painel e busque um paciente por CPF.</p>
+        <button class="btn-voltar-grande" onclick="window.location.href='painel-medico.html'">
+          ← Voltar ao painel
+        </button>
+      </div>`;
+  } else {
+    const p = JSON.parse(raw);
+
+    const alergias  = (p.alergias    || '').split(',').filter(x => x.trim());
+    const meds      = (p.medicamentos || '').split(',').filter(x => x.trim());
+    const condicoes = (p.condicoes   || '').split(',').filter(x => x.trim());
+
+    const tagAlergias = alergias.length
+      ? alergias.map(a => `<span class="tag-item tag-alergia">⚠ ${a.trim()}</span>`).join('')
+      : '<span class="vazio">Nenhuma alergia registrada</span>';
+
+    const tagMeds = meds.length
+      ? meds.map(m => `<span class="tag-item tag-med">${m.trim()}</span>`).join('')
+      : '<span class="vazio">Nenhum medicamento registrado</span>';
+
+    const tagCond = condicoes.length
+      ? condicoes.map(c => `<span class="tag-item tag-cond">${c.trim()}</span>`).join('')
+      : '<span class="vazio">Nenhuma condição registrada</span>';
+
+    const agora = new Date().toLocaleString('pt-BR');
+
+    main.innerHTML = `
+      <div class="topbar">
+        <div class="topbar-left">
+          <a class="btn-voltar" href="painel-medico.html">← Voltar</a>
+          <h2>Ficha de <span>emergência</span></h2>
+        </div>
+      </div>
+
+      <div class="alerta-emergencia">
+        🚨 <strong>Modo emergência</strong> — Dados exibidos para uso profissional exclusivo.
+        Acesso registrado em: ${agora}
+      </div>
+
+      <div class="ficha-header">
+        <div class="paciente-info">
+          <div class="paciente-avatar-lg">🧑‍🦯</div>
+          <div class="paciente-dados">
+            <h3>${p.nome || '—'}</h3>
+            <div class="meta">
+              CPF: ${p.cpf || '—'}<br/>
+              Nascimento: ${p.dataNascimento || '—'}
+            </div>
+          </div>
+        </div>
+        <div class="tipo-sangue-box">
+          <div class="sangue-val">${p.tipoSanguineo || '?'}</div>
+          <small>tipo sanguíneo</small>
+        </div>
+      </div>
+
+      <div class="secoes-grid">
+
+        <div class="secao">
+          <div class="secao-titulo">
+            <div class="dot dot-red"></div>
+            <span style="color:var(--red)">Alergias</span>
+          </div>
+          ${tagAlergias}
+        </div>
+
+        <div class="secao">
+          <div class="secao-titulo">
+            <div class="dot dot-blue"></div>
+            <span style="color:var(--blue)">Medicamentos em uso</span>
+          </div>
+          ${tagMeds}
+        </div>
+
+        <div class="secao">
+          <div class="secao-titulo">
+            <div class="dot dot-amber"></div>
+            <span style="color:var(--amber)">Condições médicas</span>
+          </div>
+          ${tagCond}
+        </div>
+
+        <div class="secao">
+          <div class="secao-titulo">
+            <div class="dot dot-green"></div>
+            <span style="color:var(--accent)">Contato de emergência</span>
+          </div>
+          <div class="contato-card">
+            <div class="contato-avatar">📞</div>
+            <div class="contato-info">
+              <p>${p.contatoNome || '—'}</p>
+              <small>${p.contato || 'Telefone não informado'}</small>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="ficha-rodape">
+        <span>SIIME</span> — sistema de emergências médicas &nbsp;|&nbsp;
+        acesso por: ${crm} &nbsp;|&nbsp; ${agora}
+      </div>
+    `;
+  }
+</script>
+</body>
+</html>

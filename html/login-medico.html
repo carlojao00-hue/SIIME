@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>SIIME — Acesso Profissional</title>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg-dark:    #f5f5f5;
+      --bg-panel:   #ffffff;
+      --bg-card:    #ffffff;
+      --border:     #30363d;
+      --accent:     #5b6efb;
+      --accent-dim: #00c89622;
+      --accent-red: #ff4d4d;
+      --text-main:  #000000;
+      --text-muted: #7d8590;
+      --text-hint:  #484f58;
+      --danger-bg:  #3d1212;
+      --danger-bd:  #f8514933;
+    }
+
+    body {
+      font-family: 'Space Grotesk', sans-serif;
+      background: var(--bg-dark);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Grade de fundo decorativa */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(var(--border) 1px, transparent 1px),
+        linear-gradient(90deg, var(--border) 1px, transparent 1px);
+      background-size: 40px 40px;
+      opacity: 0.18;
+      pointer-events: none;
+    }
+
+    body::after {
+      content: '';
+      position: fixed;
+      top: -200px; left: 50%;
+      transform: translateX(-50%);
+      width: 600px; height: 600px;
+      background: radial-gradient(circle, #00c89612 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .card {
+      background: var(--bg-panel);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      width: 100%;
+      max-width: 420px;
+      padding: 2.5rem 2rem;
+      position: relative;
+      animation: fadeUp 0.5s ease both;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .logo-area {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 2rem;
+    }
+
+    .logo-icon {
+      width: 44px; height: 44px;
+      background: var(--accent-dim);
+      border: 1px solid var(--accent);
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 22px;
+    }
+
+    .logo-text h1 {
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: var(--text-main);
+      letter-spacing: -0.02em;
+    }
+
+    .logo-text span {
+      font-size: 0.72rem;
+      color: var(--accent);
+      font-family: 'JetBrains Mono', monospace;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .divider {
+      height: 1px;
+      background: var(--border);
+      margin: 0 0 1.8rem;
+    }
+
+    .tag-acesso {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: #04f8bb14;
+      border: 1px solid #00c89640;
+      border-radius: 6px;
+      padding: 4px 10px;
+      font-size: 0.72rem;
+      color: var(--accent);
+      font-family: 'JetBrains Mono', monospace;
+      letter-spacing: 0.05em;
+      margin-bottom: 1.4rem;
+    }
+
+    .tag-acesso::before {
+      content: '';
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--accent);
+      animation: pulse 2s ease infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50%       { opacity: 0.3; }
+    }
+
+    label {
+      display: block;
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+      letter-spacing: 0.03em;
+    }
+
+    .field {
+      margin-bottom: 1rem;
+    }
+
+    input {
+      width: 100%;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 10px 14px;
+      font-size: 0.9rem;
+      font-family: 'Space Grotesk', sans-serif;
+      color: var(--text-main);
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-dim);
+    }
+
+    input::placeholder { color: var(--text-hint); }
+
+    .hint {
+      font-size: 0.7rem;
+      color: var(--text-hint);
+      margin-top: 5px;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .btn {
+      width: 100%;
+      background: var(--accent);
+      color: #0d1117;
+      border: none;
+      border-radius: 8px;
+      padding: 12px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      font-family: 'Space Grotesk', sans-serif;
+      cursor: pointer;
+      margin-top: 0.5rem;
+      transition: opacity 0.2s, transform 0.1s;
+      letter-spacing: 0.01em;
+    }
+
+    .btn:hover  { opacity: 0.88; }
+    .btn:active { transform: scale(0.98); }
+
+    .erro {
+      display: none;
+      background: var(--danger-bg);
+      border: 1px solid var(--danger-bd);
+      border-radius: 8px;
+      padding: 10px 14px;
+      font-size: 0.82rem;
+      color: var(--accent-red);
+      margin-bottom: 1rem;
+    }
+
+    .erro.visivel { display: block; animation: shake 0.35s ease; }
+
+    @keyframes shake {
+      0%,100% { transform: translateX(0); }
+      25%      { transform: translateX(-6px); }
+      75%      { transform: translateX(6px); }
+    }
+
+    .rodape {
+      margin-top: 2rem;
+      padding-top: 1.2rem;
+      border-top: 1px solid var(--border);
+      text-align: center;
+      font-size: 0.75rem;
+      color: var(--text-hint);
+    }
+
+    .rodape a {
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .rodape a:hover { color: var(--accent); }
+
+    .demo-box {
+      background: var(--bg-card);
+      border: 1px dashed var(--border);
+      border-radius: 8px;
+      padding: 10px 14px;
+      margin-top: 1.2rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem;
+      color: var(--text-hint);
+      line-height: 1.6;
+    }
+
+    .demo-box strong {
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="logo-area">
+      <div class="logo-icon">🏥</div>
+      <div class="logo-text">
+        <h1>SIIME</h1>
+        <span>Acesso profissional</span>
+      </div>
+    </div>
+    <div class="divider"></div>
+
+    <div class="tag-acesso">ÁREA RESTRITA — PROFISSIONAL DE SAÚDE</div>
+
+    <div class="erro" id="msgErro">CRM ou senha incorretos. Tente novamente.</div>
+
+    <div class="field">
+      <label for="crm">CRM / Identificação profissional</label>
+      <input type="text" id="crm" placeholder="Ex: CRM-RN 12345" autocomplete="off"/>
+    </div>
+
+    <div class="field">
+      <label for="senha">Senha</label>
+      <input type="password" id="senha" placeholder="Digite sua senha"/>
+      <p class="hint">// protótipo de demonstração</p>
+    </div>
+
+    <button class="btn" onclick="fazerLogin()">Entrar no sistema</button>
+
+    <div class="demo-box">
+      <strong>credenciais de demonstração</strong><br/>
+      CRM: qualquer valor<br/>
+      Senha: <strong>medico123</strong>
+    </div>
+
+    <div class="rodape">
+      <a href="/Usuario/login.html">← Voltar ao login do paciente</a>
+    </div>
+  </div>
+
+  <script type="module">
+    function fazerLogin() {
+      const crm   = document.getElementById('crm').value.trim();
+      const senha = document.getElementById('senha').value;
+      const erro  = document.getElementById('msgErro');
+
+      if (!crm) {
+        erro.textContent = 'Preencha o campo CRM.';
+        erro.classList.add('visivel');
+        return;
+      }
+
+      if (senha !== 'medico123') {
+        erro.textContent = 'Senha incorreta. Use: medico123';
+        erro.classList.add('visivel');
+        return;
+      }
+
+      erro.classList.remove('visivel');
+      sessionStorage.setItem('profissional_autenticado', 'true');
+      sessionStorage.setItem('profissional_crm', crm);
+      window.location.href = 'painel-medico.html';
+    }
+    window.fazerLogin = fazerLogin;
+
+    // Enter para logar
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Enter') fazerLogin();
+    });
+  </script>
+</body>
+</html>

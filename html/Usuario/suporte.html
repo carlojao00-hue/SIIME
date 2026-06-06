@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chat de Suporte – Tela Cheia</title>
+  <link rel="stylesheet" href="../../css/suporte.css">
+</head>
+<body>
+
+  <!-- Conteúdo principal -->
+  <div id="siteContent">
+    <h1>Bem‑vindo ao nosso site!</h1>
+    <p>O chat de suporte aparece automaticamente em tela cheia.</p>
+  </div>
+
+  <!-- Overlay do Chat -->
+  <div id="chatOverlay" class="hidden" role="dialog" aria-modal="true" aria-labelledby="chatHeader">
+    <div id="chatContainer">
+      <header id="chatHeader">
+        <span>Chat de Suporte</span>
+        <button id="closeChatBtn" aria-label="Fechar chat">&times;</button>
+        <a href="dashboard.html"><button id="inicio" class="inicio">Página Inicial</button></a>
+      </header>
+
+      <div id="chatMessages" aria-live="polite"></div>
+
+      <form id="chatForm" autocomplete="off">
+        <input type="text" id="chatInput" placeholder="Digite sua mensagem..." aria-label="Sua mensagem">
+        <button type="submit" id="sendBtn">Enviar</button>
+      </form>
+    </div>
+  </div>
+
+  <script src="../../js/suporte.js"></script>
+</body>
+</html>

@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>SIIME — Painel Médico</title>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg-dark:    #f5f5f5;
+      --bg-panel:   #ffffff;
+      --bg-card:    #fafafa;
+      --border:     #e1e4e8;
+      --accent:     #5b6efb;
+      --accent-dim: #5b6efb15;
+      --text-main:  #24292e;
+      --text-muted: #586069;
+      --text-hint:  #959da5;
+      --red:        #cb2431;
+      --amber:      #d89d20;
+      --blue:       #0366d6;
+    }
+
+    body {
+      font-family: 'Space Grotesk', sans-serif;
+      background: var(--bg-dark);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+    }
+
+    /* ---- SIDEBAR ---- */
+    .sidebar {
+      width: 240px;
+      min-height: 100vh;
+      background: var(--bg-panel);
+      border-right: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      padding: 1.5rem 1rem;
+      flex-shrink: 0;
+    }
+
+    .sidebar-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 0 0.5rem 1.5rem;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 1.5rem;
+    }
+
+    .sidebar-logo .icon {
+      width: 36px; height: 36px;
+      background: var(--accent-dim);
+      border: 1px solid var(--accent);
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 18px;
+    }
+
+    .sidebar-logo h1 {
+      font-size: 1rem;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+    }
+
+    .sidebar-logo small {
+      display: block;
+      font-size: 0.65rem;
+      color: var(--accent);
+      font-family: 'JetBrains Mono', monospace;
+      letter-spacing: 0.06em;
+    }
+
+    .nav-section {
+      font-size: 0.65rem;
+      color: var(--text-hint);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      font-family: 'JetBrains Mono', monospace;
+      padding: 0 0.5rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 9px 12px;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      cursor: pointer;
+      margin-bottom: 2px;
+      transition: background 0.15s, color 0.15s;
+      text-decoration: none;
+    }
+
+    .nav-item:hover { background: var(--bg-card); color: var(--text-main); }
+
+    .nav-item.ativo {
+      background: var(--accent-dim);
+      color: var(--accent);
+      border: 1px solid #5b6efb30;
+    }
+
+    .nav-item .nav-icon { font-size: 16px; width: 20px; text-align: center; }
+
+    .sidebar-bottom {
+      margin-top: auto;
+      padding-top: 1rem;
+      border-top: 1px solid var(--border);
+    }
+
+    .profissional-badge {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 12px;
+      background: var(--bg-card);
+      border-radius: 8px;
+      font-size: 0.8rem;
+    }
+
+    .avatar {
+      width: 32px; height: 32px;
+      background: var(--accent-dim);
+      border: 1px solid var(--accent);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 14px;
+      flex-shrink: 0;
+    }
+
+    .profissional-info small {
+      display: block;
+      font-size: 0.65rem;
+      color: var(--text-hint);
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    /* ---- MAIN ---- */
+    .main {
+      flex: 1;
+      padding: 2rem;
+      overflow-y: auto;
+    }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 2rem;
+    }
+
+    .topbar h2 {
+      font-size: 1.4rem;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+    }
+
+    .topbar h2 span {
+      color: var(--accent);
+    }
+
+    .tag-sistema {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: #ede9ff;
+      border: 1px solid #d4c9ff;
+      border-radius: 6px;
+      padding: 5px 12px;
+      font-size: 0.7rem;
+      color: var(--accent);
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .tag-sistema::before {
+      content: '';
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--accent);
+      animation: pulse 2s ease infinite;
+    }
+
+    @keyframes pulse {
+      0%,100% { opacity:1; }
+      50%      { opacity:0.3; }
+    }
+
+    /* ---- BUSCA ---- */
+    .busca-card {
+      background: var(--bg-panel);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .busca-card h3 {
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: var(--text-muted);
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .busca-row {
+      display: flex;
+      gap: 10px;
+    }
+
+    .busca-row input {
+      flex: 1;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 11px 16px;
+      font-size: 0.9rem;
+      font-family: 'JetBrains Mono', monospace;
+      color: var(--text-main);
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      letter-spacing: 0.06em;
+    }
+
+    .busca-row input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-dim);
+    }
+
+    .busca-row input::placeholder { color: var(--text-hint); letter-spacing: 0; }
+
+    .btn-buscar {
+      background: var(--accent);
+      color: #0d1117;
+      border: none;
+      border-radius: 8px;
+      padding: 11px 22px;
+      font-size: 0.88rem;
+      font-weight: 600;
+      font-family: 'Space Grotesk', sans-serif;
+      cursor: pointer;
+      transition: opacity 0.2s, transform 0.1s;
+      white-space: nowrap;
+    }
+
+    .btn-buscar:hover  { opacity: 0.88; }
+    .btn-buscar:active { transform: scale(0.97); }
+
+    /* ---- RESULTADO ---- */
+    #resultado { display: none; animation: fadeIn 0.3s ease; }
+    @keyframes fadeIn { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
+
+    .nao-encontrado {
+      background: var(--bg-panel);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 2rem;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.88rem;
+    }
+
+    .nao-encontrado .ico { font-size: 2.5rem; margin-bottom: 0.8rem; }
+
+    /* ---- CARDS DO PACIENTE ---- */
+    .paciente-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: var(--bg-panel);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.2rem 1.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .paciente-id {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .paciente-avatar {
+      width: 48px; height: 48px;
+      background: var(--accent-dim);
+      border: 1px solid var(--accent);
+      border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 22px;
+    }
+
+    .paciente-nome h3 {
+      font-size: 1.1rem;
+      font-weight: 600;
+    }
+
+    .paciente-nome small {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .tipo-sanguineo {
+      background: #ff4d4d18;
+      border: 1px solid #ff4d4d40;
+      border-radius: 8px;
+      padding: 6px 16px;
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: var(--red);
+      font-family: 'JetBrains Mono', monospace;
+      text-align: center;
+    }
+
+    .tipo-sanguineo small {
+      display: block;
+      font-size: 0.6rem;
+      color: var(--text-hint);
+      font-weight: 400;
+      margin-top: 2px;
+    }
+
+    .grid-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .info-card {
+      background: var(--bg-panel);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.2rem 1.4rem;
+    }
+
+    .info-card .card-title {
+      font-size: 0.7rem;
+      color: var(--text-hint);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-family: 'JetBrains Mono', monospace;
+      margin-bottom: 0.8rem;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .info-card .card-title::before {
+      content: '';
+      width: 3px; height: 12px;
+      border-radius: 2px;
+    }
+
+    .card-alergias .card-title::before  { background: var(--red); }
+    .card-meds .card-title::before      { background: var(--blue); }
+    .card-cond .card-title::before      { background: var(--amber); }
+    .card-contato .card-title::before   { background: var(--accent); }
+
+    .tag-item {
+      display: inline-block;
+      border-radius: 6px;
+      padding: 4px 10px;
+      font-size: 0.78rem;
+      margin: 3px 3px 0 0;
+      font-weight: 500;
+    }
+
+    .tag-alergia { background: #ff4d4d18; color: var(--red);   border: 1px solid #ff4d4d30; }
+    .tag-med     { background: #58a6ff18; color: var(--blue);  border: 1px solid #58a6ff30; }
+    .tag-cond    { background: #f0a50018; color: var(--amber); border: 1px solid #f0a50030; }
+
+    .contato-linha {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      line-height: 1.8;
+    }
+
+    .contato-linha strong {
+      color: var(--text-main);
+      font-weight: 500;
+    }
+
+    .vazio { font-size: 0.82rem; color: var(--text-hint); font-style: italic; }
+
+    .btn-ficha {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      width: 100%;
+      background: var(--accent-dim);
+      border: 1px solid #c7c0ff;
+      border-radius: 10px;
+      padding: 13px;
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--accent);
+      cursor: pointer;
+      transition: background 0.2s, transform 0.1s;
+      margin-top: 0.5rem;
+      font-family: 'Space Grotesk', sans-serif;
+    }
+
+    .btn-ficha:hover  { background: #ede9ff; }
+    .btn-ficha:active { transform: scale(0.98); }
+
+    /* ---- STATS ---- */
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .stat-card {
+      background: var(--bg-panel);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1rem 1.2rem;
+    }
+
+    .stat-card .stat-val {
+      font-size: 1.6rem;
+      font-weight: 600;
+      font-family: 'JetBrains Mono', monospace;
+      color: var(--accent);
+    }
+
+    .stat-card .stat-label {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+  </style>
+</head>
+<body>
+
+<!-- SIDEBAR -->
+<aside class="sidebar">
+  <div class="sidebar-logo">
+    <div class="icon">🏥</div>
+    <div>
+      <h1>SIIME</h1>
+      <small>PAINEL MÉDICO</small>
+    </div>
+  </div>
+
+  <p class="nav-section" style="margin-bottom:0.5rem">NAVEGAÇÃO</p>
+
+  <a class="nav-item ativo" href="painel-medico.html">
+    <span class="nav-icon">🔍</span> Buscar paciente
+  </a>
+  <a class="nav-item" href="Usuario/login.html">
+    <span class="nav-icon">👤</span> Área do paciente
+  </a>
+  <a class="nav-item" href="sobre.html">
+    <span class="nav-icon">ℹ️</span> Sobre o SIIME
+  </a>
+  <a class="nav-item" href="Usuario/suporte.html">
+    <span class="nav-icon">🆘</span> Suporte
+  </a>
+
+  <div class="sidebar-bottom">
+    <div class="profissional-badge">
+      <div class="avatar">👨‍⚕️</div>
+      <div class="profissional-info">
+        <span id="crmDisplay" style="font-size:0.8rem; font-weight:500;">Profissional</span>
+        <small>autenticado</small>
+      </div>
+    </div>
+    <a class="nav-item" href="login-medico.html" style="margin-top:6px; color: #ff4d4d88;" onclick="sair()">
+      <span class="nav-icon">🚪</span> Sair
+    </a>
+  </div>
+</aside>
+
+<!-- CONTEÚDO PRINCIPAL -->
+<main class="main">
+  <div class="topbar">
+    <h2>Buscar <span>paciente</span></h2>
+    <div class="tag-sistema">SISTEMA ATIVO</div>
+  </div>
+
+  <!-- Estatísticas rápidas -->
+  <div class="stats-row">
+    <div class="stat-card">
+      <div class="stat-val" id="totalPacientes">0</div>
+      <div class="stat-label">Pacientes cadastrados</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-val" style="color: var(--amber);">🔍</div>
+      <div class="stat-label">Busca por CPF</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-val" style="color: var(--blue);">localStorage</div>
+      <div class="stat-label">Fonte de dados</div>
+    </div>
+  </div>
+
+  <!-- Busca -->
+  <div class="busca-card">
+    <h3>🔎 Identificar paciente por CPF</h3>
+    <div class="busca-row">
+      <input type="text" id="inputCPF" placeholder="000.000.000-00" maxlength="14"
+             oninput="mascaraCPF(this)"/>
+      <button class="btn-buscar" onclick="buscarPaciente()">Buscar</button>
+    </div>
+  </div>
+
+  <!-- Resultado -->
+  <div id="resultado"></div>
+</main>
+
+<script type="module">
+  import { db } from "../firebase.js";
+import { collection, query, where, getDocs, getCountFromServer } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+// Verificar autenticação
+if (sessionStorage.getItem('profissional_autenticado') !== 'true') {
+  window.location.href = 'login-medico.html';
+}
+
+// Exibir CRM
+const crm = sessionStorage.getItem('profissional_crm') || 'Profissional';
+document.getElementById('crmDisplay').textContent = crm;
+
+// Contar pacientes cadastrados no Firestore
+async function contarPacientes() {
+  try {
+    const snap = await getCountFromServer(collection(db, "pacientes"));
+    document.getElementById('totalPacientes').textContent = snap.data().count;
+
+    // Atualiza também o card "Fonte de dados"
+    const cards = document.querySelectorAll('.stat-card .stat-val');
+    if (cards[2]) cards[2].textContent = 'Firestore';
+  } catch(e) {
+    document.getElementById('totalPacientes').textContent = '—';
+  }
+}
+contarPacientes();
+
+// Máscara de CPF
+function mascaraCPF(input) {
+  let v = input.value.replace(/\D/g, '');
+  v = v.replace(/(\d{3})(\d)/, '$1.$2');
+  v = v.replace(/(\d{3})(\d)/, '$1.$2');
+  v = v.replace(/(\d{3})(\d{1,2})$/, '$1-$2');
+  input.value = v;
+}
+window.mascaraCPF = mascaraCPF;
+
+// Sair
+function sair() {
+  sessionStorage.removeItem('profissional_autenticado');
+  sessionStorage.removeItem('profissional_crm');
+}
+window.sair = sair;
+
+// Enter para buscar
+document.getElementById('inputCPF').addEventListener('keydown', e => {
+  if (e.key === 'Enter') buscarPaciente();
+});
+
+// Buscar paciente no Firestore pelo CPF
+async function buscarPaciente() {
+  const cpf = document.getElementById('inputCPF').value.trim();
+  const div = document.getElementById('resultado');
+
+  if (!cpf) {
+    div.style.display = 'block';
+    div.innerHTML = `
+      <div class="nao-encontrado">
+        <div class="ico">⚠️</div>
+        <p>Digite um CPF para buscar.</p>
+      </div>`;
+    return;
+  }
+
+  div.style.display = 'block';
+  div.innerHTML = `
+    <div class="nao-encontrado">
+      <div class="ico">⏳</div>
+      <p>Buscando paciente...</p>
+    </div>`;
+
+  try {
+    const cpfLimpo = cpf.replace(/\D/g, '');
+    const q = query(collection(db, "pacientes"), where("cpfLimpo", "==", cpfLimpo));
+    const snap = await getDocs(q);
+
+    if (snap.empty) {
+      div.innerHTML = `
+        <div class="nao-encontrado">
+          <div class="ico">❌</div>
+          <p>Nenhum paciente encontrado com CPF <strong>${cpf}</strong>.</p>
+          <p style="margin-top:0.5rem; font-size:0.78rem; color:var(--text-hint)">
+            O paciente precisa estar cadastrado no SIIME.
+          </p>
+        </div>`;
+      return;
+    }
+
+    const paciente = snap.docs[0].data();
+    sessionStorage.setItem('paciente_visualizado', JSON.stringify(paciente));
+
+    const alergias  = (paciente.alergias    || '').split(',').filter(x => x.trim());
+    const meds      = (paciente.medicamentos || '').split(',').filter(x => x.trim());
+    const condicoes = (paciente.condicoes    || '').split(',').filter(x => x.trim());
+
+    const tagAlergias = alergias.length
+      ? alergias.map(a => `<span class="tag-item tag-alergia">${a.trim()}</span>`).join('')
+      : '<span class="vazio">Nenhuma alergia registrada</span>';
+
+    const tagMeds = meds.length
+      ? meds.map(m => `<span class="tag-item tag-med">${m.trim()}</span>`).join('')
+      : '<span class="vazio">Nenhum medicamento registrado</span>';
+
+    const tagCond = condicoes.length
+      ? condicoes.map(c => `<span class="tag-item tag-cond">${c.trim()}</span>`).join('')
+      : '<span class="vazio">Nenhuma condição registrada</span>';
+
+    div.innerHTML = `
+      <div class="paciente-header">
+        <div class="paciente-id">
+          <div class="paciente-avatar">🧑</div>
+          <div class="paciente-nome">
+            <h3>${paciente.nome || '—'}</h3>
+            <small>CPF: ${paciente.cpf || '—'} &nbsp;|&nbsp; Nascimento: ${paciente.dataNascimento || '—'}</small>
+          </div>
+        </div>
+        <div class="tipo-sanguineo">
+          ${paciente.tipoSanguineo || '?'}
+          <small>tipo sanguíneo</small>
+        </div>
+      </div>
+
+      <div class="grid-cards">
+        <div class="info-card card-alergias">
+          <div class="card-title">Alergias</div>
+          ${tagAlergias}
+        </div>
+        <div class="info-card card-meds">
+          <div class="card-title">Medicamentos em uso</div>
+          ${tagMeds}
+        </div>
+        <div class="info-card card-cond">
+          <div class="card-title">Condições médicas</div>
+          ${tagCond}
+        </div>
+        <div class="info-card card-contato">
+          <div class="card-title">Contato de emergência</div>
+          <div class="contato-linha">
+            <strong>${paciente.contatoNome || '—'}</strong><br/>
+            ${paciente.contato || 'Telefone não informado'}
+          </div>
+        </div>
+      </div>
+
+      <button class="btn-ficha" onclick="window.location.href='ficha-emergencia.html'">
+        📋 Ver ficha médica completa
+      </button>
+    `;
+
+  } catch(erro) {
+    div.innerHTML = `
+      <div class="nao-encontrado">
+        <div class="ico">⚠️</div>
+        <p>Erro ao buscar: ${erro.message}</p>
+      </div>`;
+  }
+}
+window.buscarPaciente = buscarPaciente;
+</script>
+</body>
+</html>

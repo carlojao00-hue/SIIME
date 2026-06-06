@@ -1,0 +1,255 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f5f5f5;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+
+
+main {
+    display: flex;
+    flex-grow: 1;
+}
+
+/* Sidebar */
+.sidebar {
+    width: 250px;
+    background-color: #2c3e50;
+    color: white;
+    padding: 2rem 1rem;
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+    z-index: 3;
+}
+
+.sidebar h1 {
+    font-size: 1.8rem;
+    margin-bottom: 2rem;
+    color: #667eea;
+    text-align: center;
+}
+
+.sidebar nav ul {
+    list-style: none;
+}
+
+.sidebar nav ul li {
+    margin: 1rem 0;
+}
+
+.sidebar nav ul li a {
+    color: white;
+    text-decoration: none;
+    display: block;
+    padding: 0.75rem 1rem;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+}
+
+.sidebar nav ul li a:hover {
+    background-color: #667eea;
+    transform: translateX(5px);
+}
+
+/* Content */
+.content {
+    flex: 1;
+    padding: 3rem;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    margin: 20px;
+}
+
+.content-wrapper {
+    background: white;
+    border-radius: 15px;
+    padding: 3rem;
+    box-shadow: 0 5px 30px rgba(0, 0, 0, 0.1);
+    max-width: 700px;
+    width: 100%;
+    top: 100px;
+    position: relative;
+}
+
+/* Header */
+.header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.header h2 {
+    color: #2c3e50;
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+}
+
+.header h3 {
+    color: #7f8c8d;
+    font-size: 1.1rem;
+}
+
+/* Dados Section */
+.dados {
+    background: #f9f9f9;
+    padding: 2rem;
+    border-radius: 10px;
+    border-left: 4px solid #667eea;
+}
+
+.dados h3 {
+    color: #2c3e50;
+    margin-bottom: 1.5rem;
+    font-size: 1.3rem;
+}
+
+.dados-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+}
+
+.dado-item {
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+    background: white;
+    border-radius: 8px;
+    border-left: 3px solid #667eea;
+}
+
+.dado-item strong {
+    color: #2c3e50;
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.dado-item span {
+    color: #555;
+    font-size: 1.3rem;
+}
+
+/* Footer */
+footer {
+    background-color: #2c3e50;
+    color: white;
+    text-align: center;
+    padding: 1.5rem;
+    margin-top: auto;
+}
+
+footer p {
+    font-size: 0.9rem;
+}
+
+#buttball{
+    position: fixed;
+
+    bottom: 87px;
+    right: 10px;
+
+    background:#14b8a6;
+    color:white;
+
+    padding:15px 30px;
+
+    border:none;
+    border-radius:30px 0 0 30px;
+
+    font-weight:bold;
+    cursor:pointer;
+
+    z-index:1000;
+    width: 200px;
+    height: 60px;
+    justify-content: center;
+    align-items: center;
+}
+button#buttball {
+    display: flex;
+    font-size: 1.2rem;
+    transition: all 0.3s ease;
+}
+
+#buttball:hover{
+    background:#0f9e8d;
+}
+
+
+
+
+/* Responsividade */
+@media (max-width: 768px) {
+    main {
+        flex-direction: column;
+    }
+
+    .sidebar {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1rem;
+    }
+
+    .sidebar h1 {
+        margin-bottom: 0;
+    }
+
+    .sidebar nav ul {
+        display: flex;
+        gap: 1rem;
+        flex-wrap: wrap;
+    }
+
+    .sidebar nav ul li {
+        margin: 0;
+    }
+
+    .sidebar nav ul li a {
+        padding: 0.5rem 0.75rem;
+        font-size: 0.9rem;
+    }
+
+    .content {
+        padding: 1.5rem;
+    }
+
+    .content-wrapper {
+        padding: 1.5rem;
+    }
+
+    .title {
+        font-size: 1.8rem;
+    }
+
+    .header h2 {
+        font-size: 1.5rem;
+    }
+
+    .dados-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+
+h5 {
+    color: #2c3e50;
+    font-size: 1rem;
+    margin-top: -20px;
+    text-align: right;
+    position: relative;
+    z-index: 10;
+    cursor: pointer;
+    margin-left: 170px;
+}
+

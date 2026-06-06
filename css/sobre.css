@@ -1,0 +1,134 @@
+/* Reset básico */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Corpo da página */
+body {
+    background-color: #f4f8fb;
+    color: #333;
+    line-height: 1.6;
+}
+
+/* Cabeçalho */
+header {
+    background: linear-gradient(135deg, #0077b6, #0096c7);
+    color: white;
+    padding: 40px 20px;
+    text-align: center;
+}
+
+header h1 {
+    font-size: 2.5em;
+    margin-bottom: 15px;
+}
+
+header h3 {
+    font-weight: normal;
+    max-width: 900px;
+    margin: auto;
+}
+
+/* Conteúdo principal */
+main {
+    max-width: 1000px;
+    margin: 40px auto;
+    padding: 0 20px;
+}
+
+/* Seções */
+section {
+    background: white;
+    padding: 25px;
+    margin-bottom: 30px;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+}
+
+/* Títulos */
+h2 {
+    color: #0077b6;
+    margin-bottom: 15px;
+}
+
+/* Listas */
+ul {
+    list-style: none;
+}
+
+li {
+    padding: 10px;
+    border-left: 5px solid #0096c7;
+    background: #f7fbff;
+    margin-bottom: 10px;
+    border-radius: 5px;
+}
+
+/* Fieldset */
+fieldset {
+    border: none;
+}
+
+/* Texto final */
+h4 {
+    margin-top: 15px;
+    color: #0077b6;
+    text-align: center;
+    
+}
+
+/* Rodapé */
+footer {
+    background: #023e8a;
+    color: white;
+    text-align: center;
+    padding: 15px;
+    margin-top: 40px;
+}
+
+footer h5 {
+    font-weight: normal;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    header h1 {
+        font-size: 2em;
+    }
+
+    header h3 {
+        font-size: 1em;
+    }
+
+    main {
+        margin: 20px auto;
+    }
+}
+
+a {
+    color: #042aff;
+    text-decoration:underline;
+}
+
+section.cadastro {
+    background: white;
+    padding: 25px;
+    margin-bottom: 30px;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+   }
+
+
+a:hover {
+    color: #ff0000;
+    text-decoration:none;
+} 
+
+
+p {
+    font-size: 17px;
+    color: black
+}
