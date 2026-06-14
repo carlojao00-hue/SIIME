@@ -66,6 +66,7 @@ document.addEventListener("DOMContentLoaded", () => {
         };
 
         const cpf = dadosAtualizados.cpf.replace(/\D/g, '');
+        localStorage.setItem("siime_user", JSON.stringify(dadosAtualizados));
         localStorage.setItem("usuario_" + cpf, JSON.stringify(dadosAtualizados));
         localStorage.setItem("vitaSOS_user", JSON.stringify(dadosAtualizados));
         localStorage.setItem("vitaSOS_cpf", cpf);
