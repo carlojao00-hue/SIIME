@@ -62,5 +62,106 @@ button.inicio {
     font-weight: bold;
     cursor: pointer;
     transition: background 0.3s ease;
-    
+}
+
+button.inicio:hover {
+    background: #0f9e8d;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    #siteContent {
+        padding: 1rem;
+    }
+
+    #chatHeader {
+        padding: 0.75rem;
+        font-size: 0.95rem;
+    }
+
+    #closeChatBtn {
+        font-size: 1.3rem;
+    }
+
+    #chatMessages {
+        padding: 0.75rem;
+        gap: 0.5rem;
+    }
+
+    .message {
+        max-width: 90%;
+        padding: 0.7rem 0.9rem;
+        font-size: 0.95rem;
+    }
+
+    #chatForm {
+        flex-wrap: wrap;
+    }
+
+    #chatInput {
+        padding: 0.75rem;
+        font-size: 0.95rem;
+    }
+
+    #sendBtn {
+        padding: 0 1rem;
+        font-size: 0.9rem;
+    }
+
+    button.inicio {
+        padding: 8px 25px;
+        font-size: 0.95rem;
+    }
+}
+
+@media (max-width: 480px) {
+    html, body {
+        font-size: 14px;
+    }
+
+    #siteContent {
+        padding: 0.75rem;
+    }
+
+    #chatContainer {
+        width: 100% !important;
+        height: 100% !important;
+    }
+
+    #chatHeader {
+        padding: 0.6rem 0.5rem;
+        font-size: 0.9rem;
+    }
+
+    #closeChatBtn {
+        font-size: 1.2rem;
+        padding: 0.3rem;
+    }
+
+    #chatMessages {
+        padding: 0.5rem;
+        gap: 0.4rem;
+    }
+
+    .message {
+        max-width: 95%;
+        padding: 0.6rem 0.8rem;
+        font-size: 0.9rem;
+        border-radius: 10px;
+    }
+
+    #chatInput {
+        padding: 0.6rem;
+        font-size: 0.9rem;
+    }
+
+    #sendBtn {
+        padding: 0 0.75rem;
+        font-size: 0.85rem;
+    }
+
+    button.inicio {
+        padding: 6px 20px;
+        font-size: 0.9rem;
+    }
 }

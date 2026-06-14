@@ -156,6 +156,7 @@ main {
 
     .ficha-wrapper {
         padding: 1.5rem;
+        top: 60px;
     }
 
     .title {
@@ -172,5 +173,47 @@ main {
 
     .dado-item {
         padding: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .sidebar h1 {
+        font-size: 1.3rem;
+    }
+
+    .sidebar nav ul {
+        gap: 0.5rem;
+    }
+
+    .sidebar nav ul li a {
+        padding: 0.4rem 0.5rem;
+        font-size: 0.8rem;
+    }
+
+    .content {
+        padding: 1rem;
+    }
+
+    .ficha-wrapper {
+        padding: 1rem;
+        top: 40px;
+        max-width: 100%;
+    }
+
+    .dados h3 {
+        font-size: 1rem;
+        margin-bottom: 1rem;
+    }
+
+    .dado-item {
+        padding: 0.75rem;
+    }
+
+    .dado-item strong {
+        font-size: 0.9rem;
+    }
+
+    .dado-item span {
+        font-size: 1rem;
     }
 }

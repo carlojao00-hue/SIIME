@@ -101,11 +101,81 @@ input[type="submit"]:hover {
     text-align: center;
     margin-bottom: 30px;
     font-size: 1.1em;
-    margin-top: -67px;
 }
 
-
- p {
+p {
     font-family: 'Roboto Mono', monospace;
     color: #000000;
- }
+}
+
+@media (max-width: 600px) {
+    main {
+        margin: 20px;
+    }
+
+    header h1 {
+        font-size: 1.8em;
+    }
+
+    header h3 {
+        font-size: 1em;
+    }
+
+    section {
+        padding: 20px;
+    }
+
+    h2 {
+        font-size: 1.3rem;
+    }
+
+    label {
+        font-size: 0.95rem;
+    }
+
+    input, textarea {
+        padding: 10px;
+        font-size: 13px;
+    }
+
+    input[type="submit"] {
+        padding: 12px;
+        font-size: 14px;
+    }
+
+    .sobre-link {
+        font-size: 1rem;
+        margin-bottom: 20px;
+    }
+}
+
+@media (max-width: 400px) {
+    header {
+        padding: 20px 10px;
+    }
+
+    header h1 {
+        font-size: 1.5em;
+    }
+
+    main {
+        max-width: 100%;
+        padding: 15px;
+        margin: 20px 0;
+    }
+
+    section {
+        padding: 15px;
+        margin-bottom: 15px;
+    }
+
+    h2 {
+        font-size: 1.1rem;
+    }
+
+    input, textarea {
+        padding: 8px;
+        margin-bottom: 12px;
+        font-size: 12px;
+    }
+}

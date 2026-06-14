@@ -242,6 +242,7 @@ footer p {
 
     .editar-wrapper {
         padding: 1.5rem;
+        top: 60px;
     }
 
     .header h2 {
@@ -255,5 +256,53 @@ footer p {
     .btn-save,
     .btn-cancel {
         width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .sidebar h1 {
+        font-size: 1.3rem;
+    }
+
+    .sidebar nav ul {
+        gap: 0.5rem;
+    }
+
+    .sidebar nav ul li a {
+        padding: 0.4rem 0.5rem;
+        font-size: 0.8rem;
+    }
+
+    .content {
+        padding: 1rem;
+    }
+
+    .editar-wrapper {
+        padding: 1rem;
+        top: 40px;
+    }
+
+    .header h2 {
+        font-size: 1.2rem;
+    }
+
+    .header p {
+        font-size: 0.95rem;
+    }
+
+    .form-group label {
+        font-size: 0.9rem;
+    }
+
+    .form-group input,
+    .form-group textarea {
+        font-size: 0.95rem;
+        padding: 0.6rem;
+    }
+
+    .btn-save,
+    .btn-cancel {
+        padding: 0.6rem 1.5rem;
+        font-size: 0.9rem;
     }
 }

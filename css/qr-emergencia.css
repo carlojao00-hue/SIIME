@@ -244,6 +244,60 @@ main {
     }
 }
 
+@media (max-width: 480px) {
+    .sidebar h1 {
+        font-size: 1.3rem;
+    }
+
+    .sidebar nav ul {
+        gap: 0.5rem;
+        flex-wrap: wrap;
+    }
+
+    .sidebar nav ul li a {
+        padding: 0.4rem 0.5rem;
+        font-size: 0.8rem;
+    }
+
+    .qr-container {
+        padding: 1rem;
+    }
+
+    .qr-wrapper {
+        padding: 1rem;
+    }
+
+    .qr-wrapper h2 {
+        font-size: 1.3rem;
+    }
+
+    .info-text {
+        font-size: 0.9rem;
+    }
+
+    .qr-display {
+        padding: 1rem;
+        margin: 1rem 0;
+    }
+
+    .btn {
+        padding: 0.6rem 1rem;
+        font-size: 0.9rem;
+    }
+
+    .actions {
+        gap: 0.5rem;
+    }
+
+    .ficha-resumida h3 {
+        font-size: 1.1rem;
+    }
+
+    .info-item {
+        padding: 0.75rem;
+    }
+}
+
 /* Estilos de Impressão */
 @media print {
     body {

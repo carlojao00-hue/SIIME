@@ -34,8 +34,7 @@ body {
     border-radius: 8px;
     border: 1px solid #ccc;
     font-size: 15px;
-    margin-left: -10px;
-    
+    box-sizing: border-box;
 }
 
 .login-box input:focus {
@@ -95,4 +94,75 @@ p {
     font-size: 16px;
     top: 10px;
     position: relative;
+}
+
+@media (max-width: 768px) {
+    .login-box {
+        max-width: 90%;
+        margin: 40px auto;
+        padding: 25px;
+        margin-top: 150px;
+    }
+
+    .login-box h1 {
+        font-size: 1.5rem;
+    }
+
+    .login-box input {
+        padding: 12px;
+        font-size: 14px;
+    }
+
+    .login-box button {
+        padding: 12px;
+        font-size: 14px;
+    }
+
+    p {
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 480px) {
+    body {
+        background: #f4f8fb;
+    }
+
+    .login-box {
+        max-width: 95%;
+        margin: 20px auto;
+        padding: 20px;
+        margin-top: 80px;
+    }
+
+    .login-box h1 {
+        font-size: 1.3rem;
+        margin-bottom: 20px;
+    }
+
+    .login-box input {
+        padding: 10px;
+        margin: 8px 0;
+        font-size: 14px;
+    }
+
+    .login-box button {
+        padding: 10px;
+        font-size: 14px;
+        margin-top: 15px;
+    }
+
+    .msg-login {
+        font-size: 12px;
+    }
+
+    p {
+        font-size: 12px;
+    }
+
+    section.left-ball,
+    section.right-ball {
+        width: 500px;
+        height: 500px;
+    }
 }

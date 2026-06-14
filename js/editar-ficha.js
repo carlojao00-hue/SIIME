@@ -68,12 +68,12 @@ document.addEventListener("DOMContentLoaded", () => {
         const cpf = dadosAtualizados.cpf.replace(/\D/g, '');
         localStorage.setItem("siime_user", JSON.stringify(dadosAtualizados));
         localStorage.setItem("usuario_" + cpf, JSON.stringify(dadosAtualizados));
-        localStorage.setItem("vitaSOS_user", JSON.stringify(dadosAtualizados));
-        localStorage.setItem("vitaSOS_cpf", cpf);
+        localStorage.setItem("siime_user", JSON.stringify(dadosAtualizados));
+        localStorage.setItem("siime_cpf", cpf);
 
         // atualiza a senha apenas se o usuário tiver inserido uma nova
         if (password) {
-            localStorage.setItem("vitaSOS_senha", password);
+            localStorage.setItem("siime_senha", password);
         }
 
         msg.style.color = "green";
