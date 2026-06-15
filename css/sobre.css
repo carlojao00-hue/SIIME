@@ -1,199 +1,196 @@
 /* Reset básico */
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: Arial, Helvetica, sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
 /* Corpo da página */
 body {
-    background-color: #f4f8fb;
-    color: #333;
-    line-height: 1.6;
+  background-color: #f4f8fb;
+  color: #333;
+  line-height: 1.6;
 }
 
 /* Cabeçalho */
 header {
-    background: linear-gradient(135deg, #0077b6, #0096c7);
-    color: white;
-    padding: 40px 20px;
-    text-align: center;
+  background: linear-gradient(135deg, #0077b6, #0096c7);
+  color: white;
+  padding: 40px 20px;
+  text-align: center;
 }
 
 header h1 {
-    font-size: 2.5em;
-    margin-bottom: 15px;
+  font-size: 2.5em;
+  margin-bottom: 15px;
 }
 
 header h3 {
-    font-weight: normal;
-    max-width: 900px;
-    margin: auto;
+  font-weight: normal;
+  max-width: 900px;
+  margin: auto;
 }
 
 /* Conteúdo principal */
 main {
-    max-width: 1000px;
-    margin: 40px auto;
-    padding: 0 20px;
+  max-width: 1000px;
+  margin: 40px auto;
+  padding: 0 20px;
 }
 
 /* Seções */
 section {
-    background: white;
-    padding: 25px;
-    margin-bottom: 30px;
-    border-radius: 10px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+  background: white;
+  padding: 25px;
+  margin-bottom: 30px;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
 }
 
 /* Títulos */
 h2 {
-    color: #0077b6;
-    margin-bottom: 15px;
+  color: #0077b6;
+  margin-bottom: 15px;
 }
 
 /* Listas */
 ul {
-    list-style: none;
+  list-style: none;
 }
 
 li {
-    padding: 10px;
-    border-left: 5px solid #0096c7;
-    background: #f7fbff;
-    margin-bottom: 10px;
-    border-radius: 5px;
+  padding: 10px;
+  border-left: 5px solid #0096c7;
+  background: #f7fbff;
+  margin-bottom: 10px;
+  border-radius: 5px;
 }
 
 /* Fieldset */
 fieldset {
-    border: none;
+  border: none;
 }
 
 /* Texto final */
 h4 {
-    margin-top: 15px;
-    color: #0077b6;
-    text-align: center;
-    
+  margin-top: 15px;
+  color: #0077b6;
+  text-align: center;
 }
 
 /* Rodapé */
 footer {
-    background: #023e8a;
-    color: white;
-    text-align: center;
-    padding: 15px;
-    margin-top: 40px;
+  background: #023e8a;
+  color: white;
+  text-align: center;
+  padding: 15px;
+  margin-top: 40px;
 }
 
 footer h5 {
-    font-weight: normal;
+  font-weight: normal;
 }
 
 /* Responsividade */
 @media (max-width: 768px) {
-    header h1 {
-        font-size: 2em;
-    }
+  header h1 {
+    font-size: 2em;
+  }
 
-    header h3 {
-        font-size: 1em;
-    }
+  header h3 {
+    font-size: 1em;
+  }
 
-    main {
-        margin: 20px auto;
-    }
+  main {
+    margin: 20px auto;
+  }
 
-    section {
-        padding: 20px;
-    }
+  section {
+    padding: 20px;
+  }
 
-    h2 {
-        font-size: 1.4rem;
-    }
+  h2 {
+    font-size: 1.4rem;
+  }
 
-    li {
-        padding: 8px;
-        font-size: 0.95rem;
-    }
+  li {
+    padding: 8px;
+    font-size: 0.95rem;
+  }
 
-    p {
-        font-size: 15px;
-    }
+  p {
+    font-size: 15px;
+  }
 }
 
 @media (max-width: 480px) {
-    header {
-        padding: 25px 15px;
-    }
+  header {
+    padding: 25px 15px;
+  }
 
-    header h1 {
-        font-size: 1.5em;
-        margin-bottom: 10px;
-    }
+  header h1 {
+    font-size: 1.5em;
+    margin-bottom: 10px;
+  }
 
-    header h3 {
-        font-size: 0.9em;
-    }
+  header h3 {
+    font-size: 0.9em;
+  }
 
-    main {
-        max-width: 100%;
-        padding: 10px;
-    }
+  main {
+    max-width: 100%;
+    padding: 10px;
+  }
 
-    section {
-        padding: 15px;
-        margin-bottom: 20px;
-    }
+  section {
+    padding: 15px;
+    margin-bottom: 20px;
+  }
 
-    h2 {
-        font-size: 1.2rem;
-    }
+  h2 {
+    font-size: 1.2rem;
+  }
 
-    h4 {
-        font-size: 1rem;
-    }
+  h4 {
+    font-size: 1rem;
+  }
 
-    li {
-        padding: 8px;
-        margin-bottom: 8px;
-        font-size: 0.9rem;
-    }
+  li {
+    padding: 8px;
+    margin-bottom: 8px;
+    font-size: 0.9rem;
+  }
 
-    p {
-        font-size: 14px;
-        line-height: 1.5;
-    }
+  p {
+    font-size: 14px;
+    line-height: 1.5;
+  }
 
-    a {
-        font-size: 0.95rem;
-    }
+  a {
+    font-size: 0.95rem;
+  }
 }
 
 a {
-    color: #042aff;
-    text-decoration:underline;
+  color: #042aff;
+  text-decoration: underline;
 }
 
 section.cadastro {
-    background: white;
-    padding: 25px;
-    margin-bottom: 30px;
-    border-radius: 10px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.08);
-   }
-
+  background: white;
+  padding: 25px;
+  margin-bottom: 30px;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+}
 
 a:hover {
-    color: #ff0000;
-    text-decoration:none;
-} 
-
+  color: #ff0000;
+  text-decoration: none;
+}
 
 p {
-    font-size: 17px;
-    color: black
+  font-size: 17px;
+  color: black;
 }
