@@ -151,7 +151,7 @@ window.addEventListener("load", () => {
   overlay.classList.remove("hidden");
 
   addMessage(
-    "Olá! Sou o assistente virtual do SIIME. Como posso ajudar você hoje? (Algumas respostas podem não fazer sentido, estamos migrando para um sistema de IA para melhorar as respostas!)",
+    "Olá! Sou o assistente virtual do SIIME. Como posso ajudar você hoje? (Tente usar palavras-chave como 'editar ficha', 'QR emergência', 'login', 'Exames', etc.)",
     "bot",
   );
 });
