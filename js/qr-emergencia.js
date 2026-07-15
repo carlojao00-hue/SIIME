@@ -29,13 +29,23 @@ document.addEventListener("DOMContentLoaded", () => {
     const condicoes     = dados.condicoes      || "Nenhuma";
     const medicamentos  = dados.medicamentos   || "Nenhum";
     const contato       = dados.contato        || "-";
+    const emergencyId = dados.emergencyId || null;
 
     // URL base do projeto — troque pelo seu domínio no Netlify
     const BASE_URL = window.location.hostname === "127.0.0.1" || window.location.hostname === "localhost"
         ? window.location.origin
         : "https://siime.netlify.app/"; // ← coloque aqui o link do Netlify
 
-    const qrText = `${BASE_URL}/html/ficha-emergencia.html?cpf=${encodeURIComponent(cpf)}`;
+    if (!emergencyId) {
+    if (aviso) {
+        aviso.textContent = "Não foi possível gerar o QR Emergência.";
+        aviso.style.display = "block";
+        aviso.style.color = "#c0392b";
+    }
+    return;
+}
+
+const qrText = `${BASE_URL}/html/ficha-emergencia.html?id=${encodeURIComponent(emergencyId)}`;
 
     if (aviso) aviso.style.display = "none";
     qrcodeContainer.innerHTML = "";

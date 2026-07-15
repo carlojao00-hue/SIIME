@@ -427,7 +427,19 @@
   <!-- Conteúdo renderizado via JS -->
 </main>
 
-<script>
+<script type="module">
+
+import { db } from "../firebase.js";
+const main = document.getElementById("mainContent");
+import {
+    collection,
+    query,
+    where,
+    getDocs
+
+} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+
   // Verificar autenticação
   if (sessionStorage.getItem('profissional_autenticado') !== 'true') {
     window.location.href = 'login-medico.html';
@@ -441,41 +453,7 @@
     sessionStorage.removeItem('profissional_crm');
   }
 
-  // Carregar paciente
-  const raw = sessionStorage.getItem('paciente_visualizado');
-  const main = document.getElementById('mainContent');
-
-  if (!raw) {
-    main.innerHTML = `
-      <div class="erro-tela">
-        <div class="ico">⚠️</div>
-        <h3>Nenhum paciente selecionado</h3>
-        <p>Volte ao painel e busque um paciente por CPF.</p>
-        <button class="btn-voltar-grande" onclick="window.location.href='painel-medico.html'">
-          ← Voltar ao painel
-        </button>
-      </div>`;
-  } else {
-    const p = JSON.parse(raw);
-
-    const alergias  = (p.alergias    || '').split(',').filter(x => x.trim());
-    const meds      = (p.medicamentos || '').split(',').filter(x => x.trim());
-    const condicoes = (p.condicoes   || '').split(',').filter(x => x.trim());
-
-    const tagAlergias = alergias.length
-      ? alergias.map(a => `<span class="tag-item tag-alergia">⚠ ${a.trim()}</span>`).join('')
-      : '<span class="vazio">Nenhuma alergia registrada</span>';
-
-    const tagMeds = meds.length
-      ? meds.map(m => `<span class="tag-item tag-med">${m.trim()}</span>`).join('')
-      : '<span class="vazio">Nenhum medicamento registrado</span>';
-
-    const tagCond = condicoes.length
-      ? condicoes.map(c => `<span class="tag-item tag-cond">${c.trim()}</span>`).join('')
-      : '<span class="vazio">Nenhuma condição registrada</span>';
-
-    const agora = new Date().toLocaleString('pt-BR');
-
+  {
     main.innerHTML = `
       <div class="topbar">
         <div class="topbar-left">
