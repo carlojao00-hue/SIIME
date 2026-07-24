@@ -428,12 +428,42 @@
 </main>
 
 <script>
-  // Verificar autenticação
-  if (sessionStorage.getItem('profissional_autenticado') !== 'true') {
-    window.location.href = 'login-medico.html';
+  // 1. Verifica os parâmetros da URL
+  const urlParams = new URLSearchParams(window.location.search);
+  const modoEmergencia = urlParams.get('modo') === 'emergencia';
+  const dataParam = urlParams.get('data');
+
+  let paciente = null;
+  let crm = 'Profissional';
+
+  if (modoEmergencia && dataParam) {
+    // ========================================================
+    // FLUXO 1: ACESSO VIA QR CODE (SEM NECESSIDADE DE LOGIN)
+    // ========================================================
+    try {
+      // Decodifica os dados enviados no QR Code
+      const decodedData = decodeURIComponent(escape(atob(dataParam)));
+      paciente = JSON.parse(decodedData);
+      crm = 'Acesso Emergencial (QR Code)';
+    } catch (e) {
+      console.error("Erro ao decodificar dados do QR Code:", e);
+    }
+  } else {
+    // ========================================================
+    // FLUXO 2: ACESSO VIA PAINEL DO PROFISSIONAL (EXIGE LOGIN)
+    // ========================================================
+    if (sessionStorage.getItem('profissional_autenticado') !== 'true') {
+      window.location.href = 'login-medico.html';
+    }
+    
+    crm = sessionStorage.getItem('profissional_crm') || 'Profissional';
+    const raw = sessionStorage.getItem('paciente_visualizado');
+    if (raw) {
+      paciente = JSON.parse(raw);
+    }
   }
 
-  const crm = sessionStorage.getItem('profissional_crm') || 'Profissional';
+  // Atualiza o crachá/status na barra lateral
   document.getElementById('crmDisplay').textContent = crm;
 
   function sair() {
@@ -441,22 +471,21 @@
     sessionStorage.removeItem('profissional_crm');
   }
 
-  // Carregar paciente
-  const raw = sessionStorage.getItem('paciente_visualizado');
+  // Renderização da Ficha Médica
   const main = document.getElementById('mainContent');
 
-  if (!raw) {
+  if (!paciente) {
     main.innerHTML = `
       <div class="erro-tela">
         <div class="ico">⚠️</div>
         <h3>Nenhum paciente selecionado</h3>
-        <p>Volte ao painel e busque um paciente por CPF.</p>
+        <p>Volte ao painel e busque um paciente por CPF ou escaneie um QR Code válido.</p>
         <button class="btn-voltar-grande" onclick="window.location.href='painel-medico.html'">
           ← Voltar ao painel
         </button>
       </div>`;
   } else {
-    const p = JSON.parse(raw);
+    const p = paciente;
 
     const alergias  = (p.alergias    || '').split(',').filter(x => x.trim());
     const meds      = (p.medicamentos || '').split(',').filter(x => x.trim());
@@ -479,13 +508,13 @@
     main.innerHTML = `
       <div class="topbar">
         <div class="topbar-left">
-          <a class="btn-voltar" href="painel-medico.html">← Voltar</a>
+          <a class="btn-voltar" href="javascript:history.back()">← Voltar</a>
           <h2>Ficha de <span>emergência</span></h2>
         </div>
       </div>
 
       <div class="alerta-emergencia">
-        🚨 <strong>Modo emergência</strong> — Dados exibidos para uso profissional exclusivo.
+        🚨 <strong>Modo emergência</strong> — Dados exibidos para uso emergencial.
         Acesso registrado em: ${agora}
       </div>
 
