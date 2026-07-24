@@ -48,8 +48,8 @@ document.addEventListener("DOMContentLoaded", () => {
     // Codifica os dados em Base64 seguro para acentuação (UTF-8)
     const payload = btoa(unescape(encodeURIComponent(JSON.stringify(dadosEmergencia))));
 
-    // 3. Monta a URL dinâmica apontando para ficha-emergencia.html
-    const origin = window.location.origin;
+    // 3. Monta a URL para a ficha de emergência
+    const qrText = `${window.location.origin}/html/ficha-emergencia.html?modo=emergencia&data=${payload}`;
     const pathname = window.location.pathname;
     const folderPath = pathname.substring(0, pathname.lastIndexOf('/') + 1);
     
