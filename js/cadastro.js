@@ -45,17 +45,13 @@ document.addEventListener("DOMContentLoaded", () => {
             // Cria o usuário no Firebase Auth
             const credencial = await createUserWithEmailAndPassword(auth, email, password);
             const uid = credencial.user.uid;
-            const emergencyId = crypto.randomUUID();
 
             // Salva os dados médicos no Firestore
             await setDoc(doc(db, "pacientes", uid), {
-            ...dados,
-            cpfLimpo: cpf,
-            uid: uid,
-            emergencyId: emergencyId,
-            criadoEm: new Date().toISOString()
-        });
-            
+                ...dados,
+                cpfLimpo: cpf,
+                uid: uid
+            });
 
             alert("Cadastro realizado com sucesso!");
             window.location.href = "dashboard.html";
