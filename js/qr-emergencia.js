@@ -22,17 +22,18 @@ document.addEventListener("DOMContentLoaded", () => {
         return;
     }
 
-    const nome          = dados.nome          || "-";
-    const cpf           = dados.cpfLimpo      || dados.cpf?.replace(/\D/g, '') || "-";
-    const tipoSanguineo = dados.tipoSanguineo  || "-";
-    const alergias      = dados.alergias       || "";
-    const condicoes     = dados.condicoes      || "";
-    const medicamentos  = dados.medicamentos   || "";
-    const contato       = dados.contato        || "-";
-    const contatoNome   = dados.contatoNome   || "Contato de Emergência";
-    const dataNascimento= dados.dataNascimento|| "-";
+    // 2. Extrai os dados
+    const nome           = dados.nome           || "-";
+    const cpf            = dados.cpfLimpo       || dados.cpf?.replace(/\D/g, '') || "-";
+    const tipoSanguineo  = dados.tipoSanguineo   || "-";
+    const alergias       = dados.alergias        || "";
+    const condicoes      = dados.condicoes       || "";
+    const medicamentos   = dados.medicamentos    || "";
+    const contato        = dados.contato         || "-";
+    const contatoNome    = dados.contatoNome    || "Contato de Emergência";
+    const dataNascimento = dados.dataNascimento || "-";
 
-    // 2. Monta o pacote de dados vitais para o QR Code
+    // 3. Monta o objeto de dados de emergência
     const dadosEmergencia = {
         nome,
         cpf,
@@ -45,21 +46,17 @@ document.addEventListener("DOMContentLoaded", () => {
         contatoNome
     };
 
-    // Codifica os dados em Base64 seguro para acentuação (UTF-8)
+    // 4. Codifica em Base64 (UTF-8 seguro)
     const payload = btoa(unescape(encodeURIComponent(JSON.stringify(dadosEmergencia))));
 
-    // 3. Monta a URL para a ficha de emergência
+    // 5. Monta a URL apontando para a ficha de emergência
+    // (Ajustado para o caminho correto sem a pasta 'usuario/')
     const qrText = `${window.location.origin}/html/ficha-emergencia.html?modo=emergencia&data=${payload}`;
-    const pathname = window.location.pathname;
-    const folderPath = pathname.substring(0, pathname.lastIndexOf('/') + 1);
-    
-    // URL contendo o modo de emergência e os dados codificados
-    const qrText = `${origin}${folderPath}ficha-emergencia.html?modo=emergencia&data=${payload}`;
 
     if (aviso) aviso.style.display = "none";
     qrcodeContainer.innerHTML = "";
 
-    // 4. Gera o QR Code
+    // 6. Gera o QR Code
     if (window.QRCode) {
         try {
             new QRCode(qrcodeContainer, {
@@ -78,11 +75,11 @@ document.addEventListener("DOMContentLoaded", () => {
         qrcodeContainer.innerHTML = "<p style='color:red;text-align:center'>Biblioteca de QR Code não carregada.</p>";
     }
 
-    // 5. Preenche a prévia da Ficha Resumida na página
-    document.getElementById("nome").textContent          = nome;
+    // 7. Preenche a Ficha Resumida na tela
+    document.getElementById("nome").textContent           = nome;
     document.getElementById("tipo-sanguineo").textContent = tipoSanguineo;
-    document.getElementById("alergias").textContent      = alergias || "Nenhuma";
-    document.getElementById("contato").textContent       = contato;
+    document.getElementById("alergias").textContent       = alergias || "Nenhuma";
+    document.getElementById("contato").textContent        = contato;
 
     // Ações de Botões
     const downloadBtn = document.getElementById("download-btn");
