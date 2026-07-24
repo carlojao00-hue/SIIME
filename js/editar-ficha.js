@@ -1,3 +1,13 @@
+import { db, auth } from "../../firebase.js";
+
+import {
+    collection,
+    query,
+    where,
+    getDocs,
+    updateDoc
+} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
 document.addEventListener("DOMContentLoaded", () => {
     const form = document.getElementById("editarForm");
     const msg = document.getElementById("msg");
@@ -27,7 +37,7 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("emergency_contact_phone").value = usuario.contato || "";
 
     // Salva as alterações quando o formulário é enviado
-    form.addEventListener("submit", function (e) {
+    form.addEventListener("submit", async function (e) {
         e.preventDefault();
 
         const password = document.getElementById("Password").value;
@@ -64,6 +74,31 @@ document.addEventListener("DOMContentLoaded", () => {
             contatoNome: document.getElementById("emergency_contact_name").value,
             tipoSanguineo: document.getElementById("blood_type").value
         };
+
+        try {
+
+    const uid = auth.currentUser.uid;
+
+    const q = query(
+        collection(db, "pacientes"),
+        where("uid", "==", uid)
+    );
+
+    const snap = await getDocs(q);
+
+    if (!snap.empty) {
+
+        const docRef = snap.docs[0].ref;
+
+        await updateDoc(docRef, dadosAtualizados);
+
+    }
+
+} catch (erro) {
+
+    console.error("Erro ao atualizar Firestore:", erro);
+
+}
 
         const cpf = dadosAtualizados.cpf.replace(/\D/g, '');
         localStorage.setItem("siime_user", JSON.stringify(dadosAtualizados));
